@@ -1,0 +1,343 @@
+{
+  "nodes": [
+    {
+      "id": "a000000000000001",
+      "type": "group",
+      "x": 0,
+      "y": 0,
+      "width": 1880,
+      "height": 1120,
+      "label": "agentscope-core 运行时架构",
+      "color": "5"
+    },
+    {
+      "id": "a000000000000002",
+      "type": "group",
+      "x": 0,
+      "y": 1180,
+      "width": 1880,
+      "height": 1120,
+      "label": "推荐源码阅读路径",
+      "color": "4"
+    },
+    {
+      "id": "b000000000000001",
+      "type": "text",
+      "x": 60,
+      "y": 100,
+      "width": 240,
+      "height": 130,
+      "text": "# 调用方\n\n应用 / Web / CLI / Harness\n\n`call()` 或 `streamEvents()`",
+      "color": "5"
+    },
+    {
+      "id": "b000000000000002",
+      "type": "text",
+      "x": 380,
+      "y": 100,
+      "width": 260,
+      "height": 150,
+      "text": "# agent\n\n`Agent`：能力契约\n\n`AgentBase`：生命周期\n\n`RuntimeContext`：单次调用上下文",
+      "color": "6"
+    },
+    {
+      "id": "b000000000000003",
+      "type": "text",
+      "x": 720,
+      "y": 80,
+      "width": 280,
+      "height": 180,
+      "text": "# ReActAgent\n\n公开门面 + Builder\n\n模型、Toolkit、Middleware、StateStore 的装配与编排",
+      "color": "6"
+    },
+    {
+      "id": "b000000000000004",
+      "type": "text",
+      "x": 1080,
+      "y": 70,
+      "width": 300,
+      "height": 200,
+      "text": "# CallExecution\n\n一次调用的隔离执行域\n\n持有 AgentState、PermissionEngine、RuntimeContext、事件 sink 与中断控制",
+      "color": "3"
+    },
+    {
+      "id": "b000000000000005",
+      "type": "text",
+      "x": 1480,
+      "y": 70,
+      "width": 300,
+      "height": 170,
+      "text": "# Reasoning\n\n上下文 + system prompt + tool schemas\n\n通过 `Model.stream()` 获取增量响应",
+      "color": "2"
+    },
+    {
+      "id": "b000000000000006",
+      "type": "text",
+      "x": 1480,
+      "y": 330,
+      "width": 300,
+      "height": 170,
+      "text": "# model / formatter\n\n`Model` → `Flux<ChatResponse>`\n\nFormatter 适配 Provider 协议",
+      "color": "2"
+    },
+    {
+      "id": "b000000000000007",
+      "type": "text",
+      "x": 1080,
+      "y": 350,
+      "width": 300,
+      "height": 200,
+      "text": "# message / accumulator\n\n增量 chunk 累积为 `Msg`\n\n内容可能是 Text、Thinking、ToolUse、ToolResult 或多媒体",
+      "color": "4"
+    },
+    {
+      "id": "b000000000000008",
+      "type": "text",
+      "x": 1480,
+      "y": 610,
+      "width": 300,
+      "height": 180,
+      "text": "# Acting\n\n读取 `ToolUseBlock`\n\n权限判定后交给 Toolkit / ToolExecutor",
+      "color": "2"
+    },
+    {
+      "id": "b000000000000009",
+      "type": "text",
+      "x": 1080,
+      "y": 650,
+      "width": 300,
+      "height": 180,
+      "text": "# permission / HITL\n\nALLOW → 执行\nASK → 暂停等待确认\nDENY → 合成拒绝结果",
+      "color": "1"
+    },
+    {
+      "id": "b00000000000000a",
+      "type": "text",
+      "x": 700,
+      "y": 650,
+      "width": 300,
+      "height": 200,
+      "text": "# tool\n\n`Toolkit` 管注册与 schema\n\n`ToolExecutor` 管校验、超时、重试、调度与结果转换",
+      "color": "4"
+    },
+    {
+      "id": "b00000000000000b",
+      "type": "text",
+      "x": 360,
+      "y": 650,
+      "width": 260,
+      "height": 190,
+      "text": "# state / memory\n\n按 `(userId, sessionId)` 装载\n\n保存上下文、摘要、权限、工具组、任务状态",
+      "color": "5"
+    },
+    {
+      "id": "b00000000000000c",
+      "type": "text",
+      "x": 40,
+      "y": 640,
+      "width": 240,
+      "height": 210,
+      "text": "# event\n\n执行过程的实时投影\n\nAgent / Model / Block / Tool / HITL 事件\n\n用于 UI、SSE、日志",
+      "color": "5"
+    },
+    {
+      "id": "b00000000000000d",
+      "type": "text",
+      "x": 700,
+      "y": 350,
+      "width": 300,
+      "height": 190,
+      "text": "# middleware\n\n横切 5 个点：\nAgent / Reasoning / Acting / ModelCall / SystemPrompt\n\n前四个为洋葱模型",
+      "color": "6"
+    },
+    {
+      "id": "b00000000000000e",
+      "type": "text",
+      "x": 40,
+      "y": 930,
+      "width": 1740,
+      "height": 110,
+      "text": "**主线：** 调用 → 生命周期 → per-call 执行域 → Reasoning → Model → Msg；若 Msg 含 ToolUseBlock，则 Acting → 权限 → 工具 → ToolResultBlock 写回上下文 → 再次 Reasoning。Middleware 与事件流贯穿全程。"
+    },
+    {
+      "id": "c000000000000001",
+      "type": "text",
+      "x": 50,
+      "y": 1270,
+      "width": 260,
+      "height": 130,
+      "text": "# 0. 先跑通\n\nQuickstart + `SimpleIntegrationTest`\n\n先建立输入/输出直觉",
+      "color": "5"
+    },
+    {
+      "id": "c000000000000002",
+      "type": "file",
+      "x": 390,
+      "y": 1260,
+      "width": 300,
+      "height": 180,
+      "file": "agentscope-core/src/main/java/io/agentscope/core/message/Msg.java",
+      "color": "4"
+    },
+    {
+      "id": "c000000000000003",
+      "type": "file",
+      "x": 770,
+      "y": 1260,
+      "width": 300,
+      "height": 180,
+      "file": "agentscope-core/src/main/java/io/agentscope/core/model/Model.java",
+      "color": "4"
+    },
+    {
+      "id": "c000000000000004",
+      "type": "file",
+      "x": 1150,
+      "y": 1260,
+      "width": 300,
+      "height": 180,
+      "file": "agentscope-core/src/main/java/io/agentscope/core/agent/Agent.java",
+      "color": "6"
+    },
+    {
+      "id": "c000000000000005",
+      "type": "file",
+      "x": 1530,
+      "y": 1260,
+      "width": 300,
+      "height": 180,
+      "file": "agentscope-core/src/main/java/io/agentscope/core/agent/AgentBase.java",
+      "color": "6"
+    },
+    {
+      "id": "c000000000000006",
+      "type": "file",
+      "x": 1530,
+      "y": 1530,
+      "width": 300,
+      "height": 180,
+      "file": "agentscope-core/src/main/java/io/agentscope/core/tool/Toolkit.java",
+      "color": "4"
+    },
+    {
+      "id": "c000000000000007",
+      "type": "file",
+      "x": 1150,
+      "y": 1530,
+      "width": 300,
+      "height": 180,
+      "file": "agentscope-core/src/main/java/io/agentscope/core/tool/ToolExecutor.java",
+      "color": "4"
+    },
+    {
+      "id": "c000000000000008",
+      "type": "file",
+      "x": 770,
+      "y": 1530,
+      "width": 300,
+      "height": 180,
+      "file": "agentscope-core/src/main/java/io/agentscope/core/ReActAgent.java",
+      "color": "3"
+    },
+    {
+      "id": "c000000000000009",
+      "type": "file",
+      "x": 390,
+      "y": 1530,
+      "width": 300,
+      "height": 180,
+      "file": "agentscope-core/src/main/java/io/agentscope/core/middleware/MiddlewareBase.java",
+      "color": "6"
+    },
+    {
+      "id": "c00000000000000a",
+      "type": "file",
+      "x": 50,
+      "y": 1530,
+      "width": 260,
+      "height": 180,
+      "file": "agentscope-core/src/main/java/io/agentscope/core/event/AgentEvent.java",
+      "color": "5"
+    },
+    {
+      "id": "c00000000000000b",
+      "type": "file",
+      "x": 50,
+      "y": 1810,
+      "width": 260,
+      "height": 180,
+      "file": "agentscope-core/src/main/java/io/agentscope/core/state/AgentState.java",
+      "color": "5"
+    },
+    {
+      "id": "c00000000000000c",
+      "type": "file",
+      "x": 390,
+      "y": 1810,
+      "width": 300,
+      "height": 180,
+      "file": "agentscope-core/src/main/java/io/agentscope/core/state/AgentStateStore.java",
+      "color": "5"
+    },
+    {
+      "id": "c00000000000000d",
+      "type": "file",
+      "x": 770,
+      "y": 1810,
+      "width": 300,
+      "height": 180,
+      "file": "agentscope-core/src/main/java/io/agentscope/core/permission/PermissionEngine.java",
+      "color": "1"
+    },
+    {
+      "id": "c00000000000000e",
+      "type": "text",
+      "x": 1150,
+      "y": 1810,
+      "width": 680,
+      "height": 200,
+      "text": "# 8. 按需深入\n\nSkill / RAG / MCP / Subagent / Shutdown / Tracing / Transport\n\n先掌握主循环，再选择与你的目标有关的分支。",
+      "color": "2"
+    },
+    {
+      "id": "c00000000000000f",
+      "type": "text",
+      "x": 50,
+      "y": 2080,
+      "width": 1780,
+      "height": 120,
+      "text": "阅读原则：不要从 `ReActAgent.java` 第 1 行顺读。先学 Msg / Model / Agent / Toolkit，再跳到 `CallExecution.doCallInner`、`reasoning`、`acting`、`isFinished` 四个核心锚点。每读一个概念，配一个代表测试。"
+    }
+  ],
+  "edges": [
+    {"id":"d000000000000001","fromNode":"b000000000000001","fromSide":"right","toNode":"b000000000000002","toSide":"left","toEnd":"arrow"},
+    {"id":"d000000000000002","fromNode":"b000000000000002","fromSide":"right","toNode":"b000000000000003","toSide":"left","toEnd":"arrow"},
+    {"id":"d000000000000003","fromNode":"b000000000000003","fromSide":"right","toNode":"b000000000000004","toSide":"left","toEnd":"arrow"},
+    {"id":"d000000000000004","fromNode":"b000000000000004","fromSide":"right","toNode":"b000000000000005","toSide":"left","toEnd":"arrow","label":"reasoning"},
+    {"id":"d000000000000005","fromNode":"b000000000000005","fromSide":"bottom","toNode":"b000000000000006","toSide":"top","toEnd":"arrow","label":"Model.stream"},
+    {"id":"d000000000000006","fromNode":"b000000000000006","fromSide":"left","toNode":"b000000000000007","toSide":"right","toEnd":"arrow","label":"ChatResponse chunks"},
+    {"id":"d000000000000007","fromNode":"b000000000000007","fromSide":"right","toNode":"b000000000000008","toSide":"left","toEnd":"arrow","label":"含 ToolUseBlock"},
+    {"id":"d000000000000008","fromNode":"b000000000000008","fromSide":"left","toNode":"b000000000000009","toSide":"right","toEnd":"arrow"},
+    {"id":"d000000000000009","fromNode":"b000000000000009","fromSide":"left","toNode":"b00000000000000a","toSide":"right","toEnd":"arrow","label":"ALLOW"},
+    {"id":"d00000000000000a","fromNode":"b00000000000000a","fromSide":"top","toNode":"b000000000000007","toSide":"bottom","toEnd":"arrow","label":"ToolResultBlock 回灌"},
+    {"id":"d00000000000000b","fromNode":"b000000000000007","fromSide":"top","toNode":"b000000000000004","toSide":"bottom","toEnd":"arrow","label":"最终 Msg / 下一轮"},
+    {"id":"d00000000000000c","fromNode":"b000000000000004","fromSide":"bottom","toNode":"b00000000000000b","toSide":"top","toEnd":"arrow","label":"load / save"},
+    {"id":"d00000000000000d","fromNode":"b000000000000004","fromSide":"left","toNode":"b00000000000000c","toSide":"right","toEnd":"arrow","label":"实时事件"},
+    {"id":"d00000000000000e","fromNode":"b00000000000000d","fromSide":"top","toNode":"b000000000000004","toSide":"bottom","toEnd":"arrow","label":"onAgent"},
+    {"id":"d00000000000000f","fromNode":"b00000000000000d","fromSide":"right","toNode":"b000000000000005","toSide":"left","toEnd":"arrow","label":"onReasoning / onModelCall"},
+    {"id":"d000000000000010","fromNode":"b00000000000000d","fromSide":"bottom","toNode":"b000000000000008","toSide":"left","toEnd":"arrow","label":"onActing"},
+    {"id":"e000000000000001","fromNode":"c000000000000001","fromSide":"right","toNode":"c000000000000002","toSide":"left","toEnd":"arrow","label":"1 消息"},
+    {"id":"e000000000000002","fromNode":"c000000000000002","fromSide":"right","toNode":"c000000000000003","toSide":"left","toEnd":"arrow","label":"2 模型契约"},
+    {"id":"e000000000000003","fromNode":"c000000000000003","fromSide":"right","toNode":"c000000000000004","toSide":"left","toEnd":"arrow","label":"3 Agent 契约"},
+    {"id":"e000000000000004","fromNode":"c000000000000004","fromSide":"right","toNode":"c000000000000005","toSide":"left","toEnd":"arrow","label":"生命周期"},
+    {"id":"e000000000000005","fromNode":"c000000000000005","fromSide":"bottom","toNode":"c000000000000006","toSide":"top","toEnd":"arrow","label":"4 工具门面"},
+    {"id":"e000000000000006","fromNode":"c000000000000006","fromSide":"left","toNode":"c000000000000007","toSide":"right","toEnd":"arrow","label":"执行器"},
+    {"id":"e000000000000007","fromNode":"c000000000000007","fromSide":"left","toNode":"c000000000000008","toSide":"right","toEnd":"arrow","label":"5 主循环"},
+    {"id":"e000000000000008","fromNode":"c000000000000008","fromSide":"left","toNode":"c000000000000009","toSide":"right","toEnd":"arrow","label":"6 扩展链"},
+    {"id":"e000000000000009","fromNode":"c000000000000009","fromSide":"left","toNode":"c00000000000000a","toSide":"right","toEnd":"arrow","label":"事件"},
+    {"id":"e00000000000000a","fromNode":"c00000000000000a","fromSide":"bottom","toNode":"c00000000000000b","toSide":"top","toEnd":"arrow","label":"7 状态"},
+    {"id":"e00000000000000b","fromNode":"c00000000000000b","fromSide":"right","toNode":"c00000000000000c","toSide":"left","toEnd":"arrow","label":"持久化"},
+    {"id":"e00000000000000c","fromNode":"c00000000000000c","fromSide":"right","toNode":"c00000000000000d","toSide":"left","toEnd":"arrow","label":"权限 / HITL"},
+    {"id":"e00000000000000d","fromNode":"c00000000000000d","fromSide":"right","toNode":"c00000000000000e","toSide":"left","toEnd":"arrow"}
+  ]
+}
